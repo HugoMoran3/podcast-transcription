@@ -1,6 +1,7 @@
 const util = require('util')
-const gc = require('./config/')
+const gc = require('../config/')
 const bucket = gc.bucket('podcast-bucket-react-node') // should be your bucket name
+const express = require("express")
 
 /**
  *
@@ -12,6 +13,7 @@ const bucket = gc.bucket('podcast-bucket-react-node') // should be your bucket n
  */
 
 export const uploadImage = (file) => new Promise((resolve, reject) => {
+  console.log("Start uploadImage function");
   const { originalname, buffer } = file
 
   const blob = bucket.file(originalname.replace(/ /g, "_"))
@@ -19,9 +21,10 @@ export const uploadImage = (file) => new Promise((resolve, reject) => {
     resumable: false
   })
   blobStream.on('finish', () => {
-    const publicUrl = format(
+    const publicUrl = util.format(
       `https://storage.googleapis.com/${bucket.name}/${blob.name}`
     )
+    console.log(publicUrl);
     resolve(publicUrl)
   })
   .on('error', () => {
@@ -29,3 +32,5 @@ export const uploadImage = (file) => new Promise((resolve, reject) => {
   })
   .end(buffer)
 })
+
+module.exports = uploadImage

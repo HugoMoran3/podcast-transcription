@@ -1,14 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
-const uploadImage = require('./helpers/helpers')
+const uploadImage = require('./helpers/helpers.js')
 
 const app = express()
 
 const multerMid = multer({
   storage: multer.memoryStorage(),
   limits: {
-    // no larger than 5mb.
+    // limited to 5mb currently
     fileSize: 5 * 1024 * 1024,
   },
 })
@@ -21,7 +21,9 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.post('/uploads', async (req, res, next) => {
   try {
     const myFile = req.file
+    console.log("Attempting to upload file");
     const imageUrl = await uploadImage(myFile)
+
     res
       .status(200)
       .json({
@@ -34,6 +36,7 @@ app.post('/uploads', async (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+  console.log("Status 500");
   res.status(500).json({
     error: err,
     message: 'Internal server error!',
