@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
-const uploadImage = require('./helpers/helpers.js')
+const uploadFile = require('./helpers/helpers.js')
 
 const app = express()
 
@@ -22,7 +22,7 @@ app.post('/uploads', async (req, res, next) => {
   try {
     const myFile = req.file
     console.log("Attempting to upload file");
-    const imageUrl = await uploadImage(myFile)
+    const imageUrl = await uploadFile(myFile)
 
     res
       .status(200)
@@ -34,6 +34,10 @@ app.post('/uploads', async (req, res, next) => {
     next(error)
   }
 })
+
+app.get('/test/', function(req, res){
+  res.send("Hello from the 'test' URL");
+});
 
 app.use((err, req, res, next) => {
   console.log("Status 500");

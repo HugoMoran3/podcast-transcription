@@ -12,8 +12,8 @@ const express = require("express")
  *   "originalname" and "buffer" as keys
  */
 
-export const uploadImage = (file) => new Promise((resolve, reject) => {
-  console.log("Start uploadImage function");
+export const uploadFile = (file) => new Promise((resolve, reject) => {
+  console.log("Start uploadFile function");
   const { originalname, buffer } = file
 
   const blob = bucket.file(originalname.replace(/ /g, "_"))
@@ -33,4 +33,4 @@ export const uploadImage = (file) => new Promise((resolve, reject) => {
   .end(buffer)
 })
 
-module.exports = uploadImage
+module.exports = uploadFile
