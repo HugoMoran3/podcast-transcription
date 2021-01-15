@@ -33,11 +33,11 @@ function FileUpload() {
                 <div className="progessBar" style={{ width: progress }}>
                    {progress}
                 </div>
-                <button onClick={uploadFile} className="upbutton">
+                <button onClick={uploadFile} className="upbutton">                   Upload
                 </button>
             <hr />
             {/* displaying received image*/}
-            {data.path && <img src={data.path} alt={data.name} />}
+            {data.path && data.name }
             </div>
         </div>
     );
