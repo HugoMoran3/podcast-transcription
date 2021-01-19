@@ -10,7 +10,7 @@ function TranscribeFile() {
     return (
         
         <button onClick={transcribeFile}>
-
+            Transcribe
         </button>
     )
     

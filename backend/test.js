@@ -5,7 +5,7 @@ const multer = require('multer')
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
 const cors = require('cors')
-const pathImport = require('path')
+const path = require('path')
 
 const uploadFile = require('./helpers/helpers.js')
 
@@ -41,7 +41,7 @@ app.post('/upload', (req, res) => {
     }
 
     console.log("File removed");
-  });
+  })
 
 
   if (!req.files) {
@@ -60,8 +60,8 @@ app.post('/upload', (req, res) => {
       console.log(fileName);
       
       //Path to current file and renamed file
-      const pathToFile = pathImport.join(__dirname, "/public/" + fileName)
-      const newPathToFile = pathImport.join(__dirname, "/public/audio.mp3")
+      const pathToFile = path.join(__dirname, "/public/" + fileName)
+      const newPathToFile = path.join(__dirname, "/public/audio.mp3")
       
       //Rename file to audio.mp3
       try {
@@ -77,9 +77,7 @@ app.post('/upload', (req, res) => {
 
       return res.send({name: myFile.name, path: `/${myFile.name}`});
   });
-});
-
-
+})
 
 app.post('/cloudstorage', async (req, res, next) => {
   try {
@@ -96,9 +94,7 @@ app.post('/cloudstorage', async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-});
-
-
+})
 
 app.use((err, req, res, next) => {
   console.log("Status 500");
@@ -107,8 +103,8 @@ app.use((err, req, res, next) => {
     message: 'Internal server error!',
   })
   next()
-});
+})
 
 app.listen(4500, () => {
   console.log('app now listening for requests on 4500')
-});
+})
